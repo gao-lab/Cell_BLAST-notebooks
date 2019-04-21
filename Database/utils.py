@@ -37,3 +37,14 @@ def self_projection(blast, dataset_name):
         correctness = pred[covered] == blast.ref.obs["cell_ontology_class"][covered]
         print("Accuracy = %.4f" % (correctness.sum() / correctness.size))
         f.write("accuracy\t%f\n" % (correctness.sum() / correctness.size))
+
+
+def nan_safe(val, f=None):
+    try:
+        if np.isnan(val):
+            return None
+    except Exception:
+        pass
+    if f is not None:
+        return f(val)
+    return val
